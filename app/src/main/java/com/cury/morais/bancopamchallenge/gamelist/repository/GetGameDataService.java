@@ -31,24 +31,4 @@ public interface GetGameDataService {
     Call<TopGames> getTopGamesData();
 
 
-//    @GET("group/{id}/users")
-//    Call<List<Notice>> groupList(@Path("id") int groupId);
-
-//    @GET("group/{id}/users")
-//    Call<List<Notice>> groupList(@Path("id") int groupId, @Query("sort") String sort);
-
-//    @GET("group/{id}/noticelist")
-//    Call<List<Notice>> groupList(@Path("id") int groupId, @QueryMap Map<String, String> options);
-//
-//    @POST("notice/new")
-//    Call<Notice> createNotice(@Body Notice notice);
-
-//    @FormUrlEncoded
-//    @POST("notice/edit")
-//    Call<Notice> updateNotice(@Field("id") String id, @Field("title") String title);
-
-//    @Multipart
-//    @PUT("notice/photo")
-//    Call<Notice> updateNotice(@Part("photo") RequestBody photo, @Part("description") RequestBody description);
-
 }

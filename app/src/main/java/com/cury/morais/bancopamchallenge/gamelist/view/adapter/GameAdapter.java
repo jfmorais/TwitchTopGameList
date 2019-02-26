@@ -82,7 +82,6 @@ public class GameAdapter extends BaseAdapter {
 
         gameName.setText("Title: "+ game.getGameDetail().getName());
 
-        notifyDataSetChanged();
         return convertView;
     }
 
@@ -117,6 +116,7 @@ public class GameAdapter extends BaseAdapter {
         }
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
+            notifyDataSetChanged();
         }
     }
 

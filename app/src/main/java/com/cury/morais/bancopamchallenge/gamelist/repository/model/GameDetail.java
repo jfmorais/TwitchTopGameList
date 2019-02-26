@@ -7,9 +7,6 @@ import com.squareup.moshi.Json;
 
 import java.io.Serializable;
 
-/**
- * Created by carlospontual on 02/04/16.
- */
 public class GameDetail implements Serializable {
 
     @SerializedName("name")
