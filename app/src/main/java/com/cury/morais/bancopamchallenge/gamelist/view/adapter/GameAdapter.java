@@ -1,7 +1,10 @@
 package com.cury.morais.bancopamchallenge.gamelist.view.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 import com.cury.morais.bancopamchallenge.R;
 import com.cury.morais.bancopamchallenge.gamelist.repository.model.Game;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -70,11 +74,15 @@ public class GameAdapter extends BaseAdapter {
         // 4
 //        gameImage.setImageResource(book.getImageResource());
 //        gameName.setText(mContext.getString(book.getName()));
-
 //        gameImage.setImageDrawable(mContext.getDrawable(R.drawable.ic_launcher_foreground));
-        gameImage.setImageDrawable(loadImageFromWebOperations(game.getGameDetail().getLogoImages().small));
+
+        if(game.getGameDetail().getBoxImages().small != null){
+            new DownloadImageTask(gameImage).execute(game.getGameDetail().getBoxImages().small);
+        }
+
         gameName.setText("Title: "+ game.getGameDetail().getName());
 
+        notifyDataSetChanged();
         return convertView;
     }
 
@@ -82,10 +90,33 @@ public class GameAdapter extends BaseAdapter {
         try {
             InputStream is = (InputStream) new URL(url).getContent();
             Drawable d = Drawable.createFromStream(is, "src name");
-            Log.i("CURY", );
+            Log.i("xxx2", "teste "+ url);
             return d;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+        ImageView bmImage;
+        public DownloadImageTask(ImageView bmImage) {
+            this.bmImage = bmImage;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap bmp = null;
+            try {
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                bmp = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return bmp;
+        }
+        protected void onPostExecute(Bitmap result) {
+            bmImage.setImageBitmap(result);
         }
     }
 
